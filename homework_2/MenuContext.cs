@@ -12,6 +12,9 @@ namespace homework_2
         public Dictionary<string, List<Item>> items;
         public List<Item> cart;
         public double totalPrice;
+        // waiting번호 추가 
+        private static int waitingNumber = 1;
+
 
         // 생성자에서 초기화 해주기!
         public MenuContext()
@@ -100,7 +103,16 @@ namespace homework_2
         {
             return totalPrice;
         }
-
+        // 대기번호
+        public int GenerateOrderNumber()
+        {
+            return waitingNumber++;
+        }
+        public void ClearCart()
+        {
+            cart.Clear();
+            totalPrice = 0.0;
+        }
 
     }
 }

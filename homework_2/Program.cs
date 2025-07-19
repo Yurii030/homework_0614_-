@@ -162,7 +162,8 @@ namespace homework_2
             int inputNum = int.Parse(Console.ReadLine());
             if (inputNum == 1)
             {
-                Console.WriteLine("주문완료"); // 5단계에서 구현
+                DisplayOrderComplete();
+                //Console.WriteLine("주문완료"); // 5단계에서 구현
             }
             else if(inputNum == 2)
             {
@@ -170,9 +171,31 @@ namespace homework_2
             }
             else
             {
+                Console.WriteLine("잘못된 입력입니다. 다시 주문해주세요");
                 DisplayOrderMenu();
             }
         }
-        
+        static void DisplayOrderComplete()
+        {
+
+            Console.WriteLine("주문이 완료되었습니다!");
+            Console.WriteLine("");
+
+            int number = menuContext.GenerateOrderNumber();
+            Console.WriteLine($"대기 번호는 [{number}]번 입니다.");
+            Console.WriteLine("( 3초 후 메뉴판으로 돌아갑니다.)");
+
+            ResetCartAndDisplayMainMenu();
+
+        }
+        static void ResetCartAndDisplayMainMenu()
+        {
+            menuContext.ClearCart();
+            Thread.Sleep(3000);
+            DisplayMainMenu();
+            HandleMainMenuInput();
+        }
+
+
     }
 }
