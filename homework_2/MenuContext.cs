@@ -13,7 +13,7 @@ namespace homework_2
         public List<Item> cart;
         public double totalPrice;
         // waiting번호 추가 
-        private static int waitingNumber = 1;
+        private int waitingNumber;
 
 
         // 생성자에서 초기화 해주기!
@@ -89,14 +89,25 @@ namespace homework_2
         }
         public void AddToCart(Item menuItem)
         {
-            cart.Add(menuItem);
+            // 장바구니(cart)에 같은 이름의 상품이 존재할 경우 : count만 증가시킴
+            // 그렇지 않으면 새로 cart에 추가
+            // item은 카드에서 하나 꺼냈을때 이름
+            Item? existingItem = cart.Find(item => item.name == menuItem.name); // ? -> null도 들어갈 수 있음
+            if (existingItem!=null)
+            {
+                existingItem.count++;
+            }
+            else {
+                // menuItem으로 넣을 경우 같은 주소를 참조할 위험이 있음
+                cart.Add(new Item(menuItem.name,menuItem.price,menuItem.description));
+            }
             totalPrice += menuItem.price;
         }
 
         public void DisplayCart()
         {
             foreach(var item in cart) { 
-                Console.WriteLine($"{item.name} | {item.price} | {item.description}");
+                Console.WriteLine($"{item.name} | {item.price} | {item.description} | x {item.count}");
             }
         }
         public double GetTotalPrice()
@@ -106,7 +117,8 @@ namespace homework_2
         // 대기번호
         public int GenerateOrderNumber()
         {
-            return waitingNumber++;
+            waitingNumber++;
+            return waitingNumber;
         }
         public void ClearCart()
         {

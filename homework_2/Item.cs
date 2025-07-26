@@ -11,6 +11,8 @@ namespace homework_2
         public string name;
         public double price;
         public string description;
+        // 수량 필드 추가
+        public int count { get; set; } = 1; // 기본 수량은 1로 시작
 
         public Item(string name, double price, string description)
         {

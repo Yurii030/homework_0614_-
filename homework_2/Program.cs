@@ -57,9 +57,7 @@ namespace homework_2
                 }
                 else if (orderIndex == 2)
                 {
-                    Console.WriteLine("해당기능은 아직 준비중입니다.");
-                    DisplayMainMenu();
-                    HandleMainMenuInput();
+                    HandleCancelMenuInput();
                 }
                 else if (orderIndex == 3)
                 {
@@ -168,6 +166,7 @@ namespace homework_2
             else if(inputNum == 2)
             {
                 DisplayMainMenu();
+                HandleMainMenuInput();
             }
             else
             {
@@ -191,11 +190,38 @@ namespace homework_2
         static void ResetCartAndDisplayMainMenu()
         {
             menuContext.ClearCart();
-            Thread.Sleep(3000);
+            Thread.Sleep(3000); // 3초 대기
             DisplayMainMenu();
             HandleMainMenuInput();
         }
-
+        
+        static void HandleCancelMenuInput()
+        {
+            Console.WriteLine("주문을 취소하시겠습니까?");
+            Console.WriteLine("1.확인   2. 취소");
+            HandleCancelConfirmationInput();
+        }
+        static void HandleCancelConfirmationInput()
+        {
+            int inputNum = int.Parse(Console.ReadLine());
+            if (inputNum == 1)
+            {
+                menuContext.ClearCart(); // 장바구니 초기화
+                Console.WriteLine("주문이 취소되었습니다");
+                DisplayMainMenu();
+                HandleMainMenuInput();
+            }
+            else if(inputNum == 2)
+            {
+                DisplayMainMenu();
+                HandleMainMenuInput();
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
+                HandleCancelMenuInput();
+            }
+        }
 
     }
 }
